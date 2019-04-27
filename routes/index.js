@@ -23,40 +23,4 @@ router.post('/submit', function (req, res) {
     }
   });
 });
-
-console.log
-
-var options = {
-  method: 'GET',
-  uri: 'https://indianrailapi.com/api/v2/PNRCheck/apikey/817f5044d25d34b353aae41a4e0f6613/PNRNumber/req.body.pnrNumber/Route/1/',
-  json: true
-};
-
-
-rp(options)
-  .then(function (response) {
-    response.result.forEach((item) => {
-      bitcoinArray.push({
-        timestamp: item.TimeStamp,
-        marketname: item.MarketName,
-        high: item.High,
-        low: item.Low,
-        volume: item.BaseVolume
-      })
-    })
-    
-    bitcoinArray.forEach((item) => console.log(item));
-    Bitcoin.collection.insertMany(bitcoinArray, function (err, result) {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("Multiple documents inserted to Collection");
-      }
-    });
-
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
 module.exports = router;
